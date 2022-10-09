@@ -42,18 +42,18 @@ const useStyles = createStyles((theme) => ({
   },
 
   header__menu_action: {
-    [theme.fn.largerThan("md")]: {
+    [theme.fn.largerThan("lg")]: {
       display: "none",
     },
   },
 
   header__links_group: {
-    [theme.fn.smallerThan("md")]: {
+    [theme.fn.smallerThan("lg")]: {
       display: "none",
     },
   },
 
-  header__auth_actions_group: {
+  header__auth_links_group: {
     [theme.fn.smallerThan("sm")]: {
       display: "none",
     },
@@ -61,12 +61,6 @@ const useStyles = createStyles((theme) => ({
 
   drawer__navbar: {
     border: "none",
-  },
-
-  drawer__auth_actions_group: {
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
-    },
   },
 
   main: {

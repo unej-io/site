@@ -3,35 +3,63 @@ import {} from "react";
 import App from "next/app";
 import type { AppContext, AppInitialProps, AppPropsWithLayout } from "next/app";
 
-import type { ColorScheme, MantineColor } from "@mantine/core";
+import type { ColorScheme, MantineColor, MantineSize } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 
-import { AppSpotlight, AuthProvider, Head, ThemeProvider } from "~/components/core";
+import { APP } from "~/const/app";
 
-import { getColorSchemeCookie, getPrimaryColorCookie } from "~/stores/theme";
+import { AuthProvider, Head, RootProvider, ThemeProvider } from "~/components/core";
+
+import { getColorSchemeCookie, getPrimaryColorCookie, getRadiusCookie } from "~/stores/theme";
+
+import "~/assets/css/style.css";
+import "~/assets/fonts/index.css";
 
 type ExtraAppProps = {
   colorScheme?: ColorScheme;
   primaryColor?: MantineColor;
+  radius?: MantineSize;
 };
 
 type _AppProps = AppPropsWithLayout & ExtraAppProps;
 
-function _App({ Component, pageProps, colorScheme, primaryColor }: _AppProps) {
+function _App({ Component, pageProps, colorScheme, primaryColor, radius }: _AppProps) {
   const getLayout = Component.getLayout ?? ((page) => <>{page}</>);
 
   return (
     <>
       <Head>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${APP.link.self}/`} />
+        <meta property="og:title" content={APP.description} />
+        <meta property="og:description" content={APP.description} />
+        <meta property="og:image" content={`${APP.link.self}/Cover.png`} />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={`${APP.link.self}/`} />
+        <meta property="twitter:title" content={APP.description} />
+        <meta property="twitter:description" content={APP.description} />
+        <meta property="twitter:image" content={`${APP.link.self}/Cover.png`} />
       </Head>
 
-      <AuthProvider>
-        <ThemeProvider colorScheme={colorScheme} primaryColor={primaryColor}>
-          <AppSpotlight>{getLayout(<Component {...pageProps} />)}</AppSpotlight>
-        </ThemeProvider>
-      </AuthProvider>
+      <ThemeProvider colorScheme={colorScheme} primaryColor={primaryColor} radius={radius}>
+        <NotificationsProvider>
+          <ModalsProvider>
+            <AuthProvider>
+              <RootProvider>
+                {/*  */}
+                {getLayout(<Component {...pageProps} />)}
+                {/*  */}
+              </RootProvider>
+            </AuthProvider>
+          </ModalsProvider>
+        </NotificationsProvider>
+      </ThemeProvider>
     </>
   );
 }
@@ -42,10 +70,12 @@ _App.getInitialProps = async (appContext: AppContext): Promise<AppInitialProps &
   const { req, res } = appContext.ctx;
   const colorScheme = getColorSchemeCookie({ req, res });
   const primaryColor = getPrimaryColorCookie({ req, res });
+  const radius = getRadiusCookie({ req, res });
 
   const extraAppProps: ExtraAppProps = {
     colorScheme,
     primaryColor,
+    radius,
   };
 
   return {

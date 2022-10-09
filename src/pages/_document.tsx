@@ -2,14 +2,16 @@ import Document, { Head, Html, Main, NextScript } from "next/document";
 
 import { createGetInitialProps } from "@mantine/next";
 
-const getInitialProps = createGetInitialProps();
+import { cache } from "~/libs/unej-io/theme";
+
+const getInitialProps = createGetInitialProps(cache);
 
 class _Document extends Document {
   static getInitialProps = getInitialProps;
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head />
         <body>
           <Main />

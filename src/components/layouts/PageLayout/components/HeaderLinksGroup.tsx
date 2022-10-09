@@ -1,15 +1,18 @@
+import { memo } from "react";
+
 import { Anchor, Group, Menu, Text } from "@mantine/core";
 import type { GroupProps } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 
-import { IconAffiliate, IconApps, IconBook2, IconCaretDown, IconLink, IconQuestionMark, IconTable, IconUsers } from "@tabler/icons";
+import { IconAffiliate, IconApps, IconBook2, IconChevronDown, IconLink, IconQuestionMark, IconReport, IconTable } from "@tabler/icons";
+
+import { AnchorLink } from "~/components/core";
 
 type LinkObject =
   | {
       label: string;
       href: string;
       links?: undefined;
-      external?: boolean;
     }
   | {
       label: string;
@@ -18,9 +21,7 @@ type LinkObject =
         label: string;
         icon: JSX.Element;
         href: string;
-        external?: boolean;
       }[];
-      external?: never;
     };
 
 const links: LinkObject[] = [
@@ -51,7 +52,6 @@ const links: LinkObject[] = [
         label: "Documentation",
         icon: <IconBook2 size={20} />,
         href: "/docs",
-        external: true,
       },
       {
         label: "Contribute",
@@ -70,6 +70,11 @@ const links: LinkObject[] = [
         icon: <IconQuestionMark size={20} />,
         href: "/faq",
       },
+      {
+        label: "Feedback",
+        icon: <IconReport size={20} />,
+        href: "/feedback",
+      },
     ],
   },
 ];
@@ -87,7 +92,7 @@ function HeaderLinksGroup({ children, ...props }: HeaderLinksGroupProps) {
                 <Anchor component="button" variant="text" underline={false}>
                   <Group spacing={4}>
                     <Text component="span">{link.label}</Text>
-                    <IconCaretDown size={16} />
+                    <IconChevronDown size={16} />
                   </Group>
                 </Anchor>
               </Menu.Target>
@@ -103,9 +108,9 @@ function HeaderLinksGroup({ children, ...props }: HeaderLinksGroupProps) {
           );
         } else {
           return (
-            <Anchor component="a" key={link.label} href={link.href} variant="text" underline={false}>
+            <AnchorLink key={link.label} href={link.href} variant="text" underline={false}>
               {link.label}
-            </Anchor>
+            </AnchorLink>
           );
         }
       })}
@@ -114,4 +119,4 @@ function HeaderLinksGroup({ children, ...props }: HeaderLinksGroupProps) {
 }
 
 export type { HeaderLinksGroupProps };
-export default HeaderLinksGroup;
+export default memo(HeaderLinksGroup);

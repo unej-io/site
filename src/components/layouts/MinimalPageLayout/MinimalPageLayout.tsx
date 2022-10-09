@@ -3,14 +3,17 @@ import type { PropsWithChildren } from "react";
 
 import type { GetLayout } from "next";
 
-import { Center, Container, Group, Text } from "@mantine/core";
+import { Anchor, Center, Container, Group, Text } from "@mantine/core";
 import { useWindowScroll } from "@mantine/hooks";
 
 import { APP } from "~/const/app";
 
-import { ColorSchemeTogglerActionIcon, PrimaryColorSelectMenuActionIcon, SpotlightOpenerActionIcon } from "~/components/core";
-import { Logo } from "~/libs/unej-io/ui";
+import { Logo } from "~/libs/unej-io/components/core";
 import { useSharedStyles } from "~/libs/unej-io/hooks/styles";
+
+import { StatusBadge } from "~/components/core";
+
+import ToolbarGroup from "../PageLayout/components/ToolbarGroup";
 
 import useStyles from "./styles";
 
@@ -27,19 +30,15 @@ function MinimalPageLayout(props: MinimalPageLayoutProps) {
       <header className={cx(classes.header, scroll.y > 10 && classes.headerShadow, sharedClasses.blurredBackground)}>
         <Container size="xl" px="xl" className={sharedClasses.fullHeight}>
           <Group align="center" spacing="xl" className={sharedClasses.fullHeight}>
-            <a href="/" className={sharedClasses.flexCenter}>
+            <Anchor href="/" variant="text" className={sharedClasses.flexCenter}>
               <Logo className={classes.logo} />
-            </a>
+            </Anchor>
+
+            <StatusBadge variant="outline" size="lg" />
 
             <div style={{ flexGrow: 1 }} />
 
-            <Group>
-              <SpotlightOpenerActionIcon aria-label="app search" />
-
-              <ColorSchemeTogglerActionIcon aria-label="toggle color scheme" />
-
-              <PrimaryColorSelectMenuActionIcon aria-label="select primary color" />
-            </Group>
+            <ToolbarGroup />
           </Group>
         </Container>
       </header>

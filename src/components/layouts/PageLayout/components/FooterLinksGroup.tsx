@@ -1,7 +1,11 @@
+import { memo } from "react";
+
 import { Anchor, Group, Stack, Text } from "@mantine/core";
 import type { GroupProps } from "@mantine/core";
 
 import { APP } from "~/const/app";
+
+import { AnchorLink } from "~/components/core";
 
 type LinkObject = {
   label: string;
@@ -67,6 +71,10 @@ const links: LinkObject[] = [
         label: "FAQ",
         href: "/faq",
       },
+      {
+        label: "Feedback",
+        href: "/feedback",
+      },
     ],
   },
   {
@@ -75,6 +83,17 @@ const links: LinkObject[] = [
       {
         label: "Stars on Github",
         href: APP.link.github,
+        external: true,
+      },
+      {
+        label: "Follow on Instagram",
+        href: "/#",
+        external: true,
+      },
+      {
+        label: "Follow on Tiktok",
+        href: "/#",
+        external: true,
       },
     ],
   },
@@ -90,11 +109,17 @@ function FooterLinksGroup({ children, ...props }: FooterLinksGroupProps) {
           <Text weight={700}>{link.label}</Text>
 
           <Stack>
-            {link.links.map((link, index) => (
-              <Anchor component="a" key={link.label + index.toString()} variant="text" size="sm" href={link.href}>
-                {link.label}
-              </Anchor>
-            ))}
+            {link.links.map((link, index) =>
+              link.external ? (
+                <Anchor key={link.label + index.toString()} variant="text" size="sm" href={link.href} target="_blank">
+                  {link.label}
+                </Anchor>
+              ) : (
+                <AnchorLink key={link.label + index.toString()} variant="text" size="sm" href={link.href}>
+                  {link.label}
+                </AnchorLink>
+              )
+            )}
           </Stack>
         </Stack>
       ))}
@@ -103,4 +128,4 @@ function FooterLinksGroup({ children, ...props }: FooterLinksGroupProps) {
 }
 
 export type { FooterLinksGroupProps };
-export default FooterLinksGroup;
+export default memo(FooterLinksGroup);
