@@ -6,7 +6,8 @@ import { useForm } from "@mantine/form";
 import type { FormErrors } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 
-import { signUp, getFirebaseErrorMessage } from "~/libs/unej-io/firebase";
+import { signUp } from "~/libs/unej-io/firebase/auth";
+import { getFirebaseErrorMessage } from "~/libs/unej-io/firebase/utilities";
 
 import { AnchorLink, Head } from "~/components/core";
 import { getMinimalPageLayout } from "~/components/layouts";

@@ -5,7 +5,8 @@ import { useForm } from "@mantine/form";
 import type { FormErrors } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 
-import { signIn, getFirebaseErrorMessage } from "~/libs/unej-io/firebase";
+import { signIn } from "~/libs/unej-io/firebase/auth";
+import { getFirebaseErrorMessage } from "~/libs/unej-io/firebase/utilities";
 
 import route from "~/const/route";
 

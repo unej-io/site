@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { Anchor, Center } from "@mantine/core";
 import { showNotification, hideNotification } from "@mantine/notifications";
 
-import { auth } from "~/libs/unej-io/firebase/const";
+import auth from "~/libs/unej-io/firebase/auth";
 
 import route from "~/const/route";
 

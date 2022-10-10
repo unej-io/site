@@ -20,21 +20,27 @@ function AcakKelompokBerdasarkanNomor() {
 
   const [result, setResult] = useSessionStorage<number[][]>({ key: "acak-kelompok-berdasarkan-nomor:result", defaultValue: [] });
 
-  const shuffleArray = useCallback(<T extends string | number>(input: T[]) => {
-    const clone = [...input];
+  const shuffleArray = useCallback((input: number[]) => {
+    const clone = input.slice();
     for (let i = clone.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [clone[i], clone[j]] = [clone[j], clone[i]];
     }
-    return clone;
+    return clone.slice();
   }, []);
 
-  const chunkArray = useCallback(<T extends string | number>(size: number, input: T[]) => {
-    return input.reduce((result, one, i) => {
-      const ch = Math.floor(i / size);
-      result[ch] = ([] as T[]).concat(result[ch] || [], one);
-      return result;
-    }, [] as T[][]);
+  const sortNumberFn = useCallback((a: number, b: number) => {
+    return a - b;
+  }, []);
+
+  const getResult = useCallback((from: number, to: number, size: number) => {
+    return shuffleArray(createArray(to - from + 1, (i) => i - 1 + from))
+      .reduce((result, one, i) => {
+        const ch = Math.floor(i / size);
+        result[ch] = ([] as number[]).concat(result[ch] || [], one);
+        return result;
+      }, [] as number[][])
+      .map((array) => [...array].sort(sortNumberFn));
   }, []);
 
   useEffect(() => {
@@ -42,6 +48,18 @@ function AcakKelompokBerdasarkanNomor() {
       setToNumber(fromNumber + 1);
     }
   }, [fromNumber, toNumber]);
+
+  useEffect(() => {
+    if (typeof fromNumber === "number" && typeof toNumber === "number" && typeof size === "number") {
+      const maxSize = toNumber - fromNumber + 1;
+      if (size > maxSize) {
+        setSize(maxSize);
+      }
+    }
+  }, [fromNumber, toNumber, size]);
+
+  const total = typeof fromNumber === "number" && typeof toNumber === "number" ? toNumber - fromNumber + 1 : undefined;
+  const left = typeof total === "number" && typeof size === "number" ? total % size : undefined;
 
   return (
     <Paper p="xl">
@@ -52,21 +70,19 @@ function AcakKelompokBerdasarkanNomor() {
           <Group grow>
             <NumberInput label="Nomor awal" placeholder="..." value={fromNumber} onChange={setFromNumber} min={0} />
             <NumberInput label="Nomor akhir" placeholder="..." value={toNumber} onChange={setToNumber} min={fromNumber} />
-            <NumberInput
-              label="Tiap kelompok"
-              placeholder="..."
-              value={size}
-              onChange={setSize}
-              min={1}
-              max={typeof fromNumber === "number" && typeof toNumber === "number" ? toNumber - fromNumber : undefined}
-            />
+
+            <NumberInput label="Jumlah" value={total} disabled />
+          </Group>
+          <Group grow>
+            <NumberInput label="Tiap kelompok" placeholder="..." value={size} onChange={setSize} min={1} max={total} />
+            <NumberInput label="Sisa" value={left} disabled />
           </Group>
 
           <Button
             leftIcon={<IconArrowsShuffle />}
             onClick={() => {
               if (typeof fromNumber === "number" && typeof toNumber === "number" && typeof size === "number") {
-                setResult(chunkArray(size, shuffleArray(createArray(toNumber - fromNumber + 1, (i) => i - 1 + fromNumber))));
+                setResult(getResult(fromNumber, toNumber, size));
               }
             }}
           >

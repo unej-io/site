@@ -71,6 +71,8 @@ const useStyles = createStyles((theme) => ({
 
   footer: {
     position: "relative",
+    marginTop: 64,
+    marginBottom: 64,
     zIndex: 0,
   },
 }));

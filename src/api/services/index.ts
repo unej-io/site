@@ -1,13 +1,4 @@
-const SomeService = {
-  async hello() {
-    return { hello: "world" };
-  },
-};
-
-const NewsService = {
-  async create() {
-    return { news: "created" };
-  },
-};
-
-export { SomeService, NewsService };
+export { default as APIService } from "./api";
+export { default as AuthService } from "./auth";
+export { default as EventService } from "./event";
+export { default as UserService } from "./user";

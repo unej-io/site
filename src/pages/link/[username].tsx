@@ -26,7 +26,7 @@ const LinkByUsernamePage: NextPageWithLayout<Props> = (props) => {
 
   return (
     <>
-      <Head title={{ prefix: `link ${link.username}` }} />
+      <Head title={{ prefix: `Link ${link.username}` }} />
 
       <div>LinkByUsernamePage</div>
     </>

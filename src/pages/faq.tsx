@@ -19,12 +19,12 @@ const FAQPage: NextPageWithLayout = () => {
 
         <Accordion variant="separated" defaultValue={["who-can-use"]} multiple>
           <Accordion.Item value="who-can-use">
-            <Accordion.Control>Siapa yang dapat menggunakan platform unej.io?</Accordion.Control>
-            <Accordion.Panel>Untuk saat ini pengguna platform hanya ditujukan kepada mahasiswa dan organisasi.</Accordion.Panel>
+            <Accordion.Control>Siapa yang dapat menggunakan unej.io?</Accordion.Control>
+            <Accordion.Panel>Untuk saat ini pengguna hanya ditujukan kepada mahasiswa dan organisasi.</Accordion.Panel>
           </Accordion.Item>
 
           <Accordion.Item value="who-can-contribute">
-            <Accordion.Control>Siapa yang dapat berkontribusi untuk platform unej.io?</Accordion.Control>
+            <Accordion.Control>Siapa yang dapat berkontribusi untuk unej.io?</Accordion.Control>
             <Accordion.Panel>
               Seluruh instansi baik mahasiswa maupun staff yang mampu dan berkompeten memberikan kontribusi sesuai kemampuan dibidang
               masing-masing.
@@ -34,7 +34,7 @@ const FAQPage: NextPageWithLayout = () => {
           <Accordion.Item value="student-account">
             <Accordion.Control>Bagaimana cara membuat akun mahasiswa?</Accordion.Control>
             <Accordion.Panel>
-              Daftar akun menggunakan email dan password. Kemudian lakukan verifikasi pengguna sebagai mahasiswa menggunakan NIM dan
+              Daftar akun menggunakan email dan password. Kemudian lakukan verifikasi pengguna sebagai mahasiswa menggunakan username dan
               password sesuai akun pada SISTER.
             </Accordion.Panel>
           </Accordion.Item>
@@ -43,17 +43,17 @@ const FAQPage: NextPageWithLayout = () => {
             <Accordion.Control>Bagaimana cara membuat akun organisasi?</Accordion.Control>
             <Accordion.Panel>
               Daftar akun menggunakan email dan password. Kemudian lakukan verifikasi pengguna sebagai organisasi. Karena akun organisasi
-              sifatnya terbatas maka harus melakukan persetujuan kepada team unej.io untuk mendapatkan id verifikasi.
+              sifatnya terbatas maka harus melakukan persetujuan kepada team unej.io untuk mendapatkan token verifikasi.
             </Accordion.Panel>
           </Accordion.Item>
 
-          <Accordion.Item value="device-lag">
+          {/* <Accordion.Item value="device-lag">
             <Accordion.Control>Kenapa aplikasi terasa lambat?</Accordion.Control>
             <Accordion.Panel>
               Mungkin anda terlalu sering mengganti tema aplikasi sehingga memakan banyak memori. Silahkan refresh browser untuk menyegarkan
               kembali.
             </Accordion.Panel>
-          </Accordion.Item>
+          </Accordion.Item> */}
         </Accordion>
       </Container>
     </>

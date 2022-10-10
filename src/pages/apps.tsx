@@ -32,11 +32,11 @@ const AppsPage: NextPageWithLayout = () => {
         <Stack spacing="xl">
           <Paper p="md" withBorder>
             <Grid>
-              <Grid.Col span={6}>
+              <Grid.Col span={12} sm={6}>
                 <Stack sx={{ width: "100%", height: "100%" }}>
                   <Group>
                     <Text size="xl">Acak</Text>
-                    <Badge>Coming soon</Badge>
+                    <Badge>Beta</Badge>
 
                     <div style={{ flexGrow: 1 }} />
 
@@ -56,7 +56,7 @@ const AppsPage: NextPageWithLayout = () => {
                   </Text>
                 </Stack>
               </Grid.Col>
-              <Grid.Col span={6}>
+              <Grid.Col span={12} sm={6}>
                 <AppImagePlaceholder />
               </Grid.Col>
             </Grid>
@@ -64,11 +64,11 @@ const AppsPage: NextPageWithLayout = () => {
 
           <Paper p="md" withBorder>
             <Grid>
-              <Grid.Col span={6}>
+              <Grid.Col span={12} sm={6}>
                 <Stack sx={{ width: "100%", height: "100%" }}>
                   <Group>
                     <Text size="xl">Konversi</Text>
-                    <Badge>Coming soon</Badge>
+                    <Badge>Beta</Badge>
 
                     <div style={{ flexGrow: 1 }} />
 
@@ -88,18 +88,18 @@ const AppsPage: NextPageWithLayout = () => {
                   </Text>
                 </Stack>
               </Grid.Col>
-              <Grid.Col span={6}>
+              <Grid.Col span={12} sm={6}>
                 <AppImagePlaceholder />
               </Grid.Col>
             </Grid>
           </Paper>
 
-          <Paper p="xl" withBorder sx={{ borderStyle: "dashed", borderWidth: 3 }}>
+          <Paper component="a" href="/contribute" p="xl" withBorder sx={{ borderStyle: "dashed", borderWidth: 3 }}>
             <Text size="xl" align="center">
               Ada masukan aplikasi?
             </Text>
             <Text size="xl" align="center">
-              Atau ingin kontribusi membuat aplikasi?
+              Atau ingin berkontribusi pengembangan aplikasi?
             </Text>
           </Paper>
         </Stack>

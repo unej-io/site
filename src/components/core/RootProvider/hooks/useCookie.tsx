@@ -5,8 +5,6 @@ import { showNotification, hideNotification } from "@mantine/notifications";
 function useCookie() {
   const [visible, setVisible] = useLocalStorage<boolean | undefined>({ key: "use-cookie" });
 
-  console.log({ visible });
-
   useDidUpdate(() => {
     if (typeof visible !== "boolean") {
       setVisible(true);
