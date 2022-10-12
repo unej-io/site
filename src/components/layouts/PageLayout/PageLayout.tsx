@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import type { PropsWithChildren } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import type { PropsWithChildren, MouseEvent } from "react";
 
 import type { GetLayout } from "next";
 import { useRouter } from "next/router";
@@ -37,6 +37,14 @@ function PageLayout(props: PageLayoutProps) {
   const matchesLargerThanMedium = useMediaQuery(`(min-width: ${theme.breakpoints.md}px)`);
   const currentMatchesLargerThanMedium = useRef(matchesLargerThanMedium);
 
+  const handleGoToBrandPage = useCallback(
+    (event: MouseEvent) => {
+      event.preventDefault();
+      router.push("/brand");
+    },
+    [router]
+  );
+
   useEffect(() => {
     const handler = () => {
       setTimeout(drawerHandle.close, 150);
@@ -67,7 +75,13 @@ function PageLayout(props: PageLayoutProps) {
               <IconMenu2 />
             </ActionIcon>
 
-            <Anchor href="/" variant="text" className={sharedClasses.flexCenter}>
+            <Anchor
+              href="/"
+              variant="text"
+              className={sharedClasses.flexCenter}
+              aria-label="unej.io logo"
+              onContextMenu={handleGoToBrandPage}
+            >
               <Logo className={classes.logo} />
             </Anchor>
 
@@ -88,7 +102,7 @@ function PageLayout(props: PageLayoutProps) {
         opened={drawer}
         onClose={drawerHandle.close}
         title={
-          <Anchor component="button" variant="text" className={sharedClasses.flexCenter}>
+          <Anchor component="button" variant="text" className={sharedClasses.flexCenter} onContextMenu={handleGoToBrandPage}>
             <Logo className={classes.logo} />
           </Anchor>
         }
@@ -118,7 +132,7 @@ function PageLayout(props: PageLayoutProps) {
         <Container size="xl" px="xl" pb="xl">
           <Group position="apart" align="start">
             <Stack px="xl" mb="xl">
-              <Anchor href="/" variant="text">
+              <Anchor href="/" variant="text" aria-label="unej.io logo" onContextMenu={handleGoToBrandPage}>
                 <Logo className={classes.logoSmall} />
               </Anchor>
               <Text size="xs" color="dimmed">
