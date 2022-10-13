@@ -7,7 +7,7 @@ import { Container, Title } from "@mantine/core";
 
 import { Head } from "~/components/core";
 import { Loading } from "~/components/next/dynamic";
-import {} from "~/components/layouts";
+import { getMinimalPageLayout } from "~/components/layouts";
 
 const AcakApp = dynamic(() => import(/* webpackChunkName: "feature/apps/acak-app" */ "~/components/features/apps/app/Acak"), {
   ssr: false,
@@ -29,5 +29,7 @@ const AppAcakPage: NextPageWithLayout = () => {
     </>
   );
 };
+
+AppAcakPage.getLayout = getMinimalPageLayout;
 
 export default AppAcakPage;

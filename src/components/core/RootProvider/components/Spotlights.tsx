@@ -10,6 +10,7 @@ import {
   IconAffiliate,
   IconApps,
   IconBook2,
+  IconCalendarEvent,
   IconHome,
   IconInfoCircle,
   IconLink,
@@ -46,6 +47,13 @@ function Spotlights(props: SpotlightsProps) {
         description: "Go to contact page",
         onTrigger: () => router.push("/contact"),
         icon: <IconPhone />,
+        group: "Main",
+      },
+      {
+        title: "Events",
+        description: "Go to events page",
+        onTrigger: () => router.push("/events"),
+        icon: <IconCalendarEvent />,
         group: "Main",
       },
       {

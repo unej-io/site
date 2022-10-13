@@ -38,7 +38,7 @@ const AppsPage: NextPageWithLayout = () => {
                     <Text size="xl">Acak</Text>
                     <Badge>Beta</Badge>
 
-                    <div style={{ flexGrow: 1 }} />
+                    <Box sx={{ flexGrow: 1 }} />
 
                     <ActionIconLink href="/apps/acak">
                       <IconLink />
@@ -49,7 +49,7 @@ const AppsPage: NextPageWithLayout = () => {
                     <Text>Tentang acak</Text>
                   </Box>
 
-                  <div style={{ flexGrow: 1 }} />
+                  <Box sx={{ flexGrow: 1 }} />
 
                   <Text color="dimmed" size="sm">
                     Built by <Anchor href="/student/flamrdevs">flamrdevs</Anchor>
@@ -70,7 +70,7 @@ const AppsPage: NextPageWithLayout = () => {
                     <Text size="xl">Konversi</Text>
                     <Badge>Beta</Badge>
 
-                    <div style={{ flexGrow: 1 }} />
+                    <Box sx={{ flexGrow: 1 }} />
 
                     <ActionIconLink href="/apps/konversi">
                       <IconLink />
@@ -81,7 +81,7 @@ const AppsPage: NextPageWithLayout = () => {
                     <Text>Tentang konversi</Text>
                   </Box>
 
-                  <div style={{ flexGrow: 1 }} />
+                  <Box sx={{ flexGrow: 1 }} />
 
                   <Text color="dimmed" size="sm">
                     Built by <Anchor href="/student/flamrdevs">flamrdevs</Anchor>
@@ -96,10 +96,10 @@ const AppsPage: NextPageWithLayout = () => {
 
           <Paper component="a" href="/contribute" p="xl" withBorder sx={{ borderStyle: "dashed", borderWidth: 3 }}>
             <Text size="xl" align="center">
-              Ada masukan aplikasi?
+              Ada saran untuk aplikasi?
             </Text>
             <Text size="xl" align="center">
-              Atau ingin berkontribusi pengembangan aplikasi?
+              Atau ingin berkontribusi dalam pengembangan aplikasi?
             </Text>
           </Paper>
         </Stack>

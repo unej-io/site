@@ -7,7 +7,7 @@ import { Container, Title } from "@mantine/core";
 
 import { Head } from "~/components/core";
 import { Loading } from "~/components/next/dynamic";
-import {} from "~/components/layouts";
+import { getMinimalPageLayout } from "~/components/layouts";
 
 const KonversiApp = dynamic(() => import(/* webpackChunkName: "feature/apps/konversi-app" */ "~/components/features/apps/app/Konversi"), {
   ssr: false,
@@ -29,5 +29,7 @@ const AppKonversiPage: NextPageWithLayout = () => {
     </>
   );
 };
+
+AppKonversiPage.getLayout = getMinimalPageLayout;
 
 export default AppKonversiPage;

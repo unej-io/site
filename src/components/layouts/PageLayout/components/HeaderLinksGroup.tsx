@@ -4,7 +4,7 @@ import { Anchor, Group, Menu, Text } from "@mantine/core";
 import type { GroupProps } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 
-import { IconAffiliate, IconApps, IconBook2, IconChevronDown, IconLink, IconQuestionMark, IconReport, IconTable } from "@tabler/icons";
+import { IconAffiliate, IconApps, IconBook2, IconChevronDown, IconLink, IconTable } from "@tabler/icons";
 
 import { AnchorLink } from "~/components/core";
 
@@ -25,6 +25,9 @@ type LinkObject =
     };
 
 const links: LinkObject[] = [
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Events", href: "/events" },
   {
     label: "Features",
     links: [
@@ -57,23 +60,6 @@ const links: LinkObject[] = [
         label: "Contribute",
         icon: <IconAffiliate size={20} />,
         href: "/contribute",
-      },
-    ],
-  },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  {
-    label: "Support",
-    links: [
-      {
-        label: "FAQ",
-        icon: <IconQuestionMark size={20} />,
-        href: "/faq",
-      },
-      {
-        label: "Feedback",
-        icon: <IconReport size={20} />,
-        href: "/feedback",
       },
     ],
   },

@@ -13,6 +13,7 @@ type LinkObject = {
     label: string;
     href: string;
     external?: boolean;
+    prevent?: boolean;
   }[];
 };
 
@@ -27,6 +28,10 @@ const links: LinkObject[] = [
       {
         label: "Contact",
         href: "/contact",
+      },
+      {
+        label: "Events",
+        href: "/events",
       },
       {
         label: "Releases",
@@ -89,10 +94,22 @@ const links: LinkObject[] = [
         label: "Follow on Instagram",
         href: "/#",
         external: true,
+        prevent: true,
       },
       {
         label: "Follow on Tiktok",
         href: "/#",
+        external: true,
+        prevent: true,
+      },
+    ],
+  },
+  {
+    label: "More",
+    links: [
+      {
+        label: "Universitas Jember",
+        href: "https://unej.ac.id",
         external: true,
       },
     ],
@@ -106,20 +123,28 @@ function FooterLinksGroup({ children, ...props }: FooterLinksGroupProps) {
     <Group {...props}>
       {links.map((link, index) => (
         <Stack key={link.label + index.toString()}>
-          <Text weight={700}>{link.label}</Text>
+          <Text size="lg" weight={700}>
+            {link.label}
+          </Text>
 
           <Stack>
-            {link.links.map((link, index) =>
-              link.external ? (
-                <Anchor key={link.label + index.toString()} variant="text" size="sm" href={link.href} target="_blank">
+            {link.links.map((link, index) => {
+              const handleClick = (event: any) => {
+                if (link.prevent) {
+                  (event as MouseEvent).preventDefault();
+                }
+              };
+
+              return link.external ? (
+                <Anchor key={link.label + index.toString()} variant="text" size="sm" href={link.href} onClick={handleClick} target="_blank">
                   {link.label}
                 </Anchor>
               ) : (
-                <AnchorLink key={link.label + index.toString()} variant="text" size="sm" href={link.href}>
+                <AnchorLink key={link.label + index.toString()} variant="text" size="sm" href={link.href} onClick={handleClick}>
                   {link.label}
                 </AnchorLink>
-              )
-            )}
+              );
+            })}
           </Stack>
         </Stack>
       ))}

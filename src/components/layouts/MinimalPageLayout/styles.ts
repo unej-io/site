@@ -17,18 +17,6 @@ const useStyles = createStyles((theme) => ({
     boxShadow: theme.shadows.md,
   },
 
-  logo: {
-    height: 22,
-
-    [theme.fn.largerThan("sm")]: {
-      height: 28,
-    },
-
-    [theme.fn.largerThan("md")]: {
-      height: 32,
-    },
-  },
-
   main: {
     position: "relative",
     marginTop: HeaderHeight,

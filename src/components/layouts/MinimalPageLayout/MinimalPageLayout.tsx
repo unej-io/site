@@ -1,9 +1,9 @@
-import {} from "react";
+import { memo } from "react";
 import type { PropsWithChildren } from "react";
 
 import type { GetLayout } from "next";
 
-import { Anchor, Center, Container, Group, Text } from "@mantine/core";
+import { Anchor, Box, Center, Container, Group, Text } from "@mantine/core";
 import { useWindowScroll } from "@mantine/hooks";
 
 import { APP } from "~/const/app";
@@ -12,52 +12,75 @@ import { Logo } from "~/libs/unej-io/components/core";
 import { useSharedStyles } from "~/libs/unej-io/hooks/styles";
 
 import { StatusBadge } from "~/components/core";
-
-import ToolbarGroup from "../PageLayout/components/ToolbarGroup";
+import { AppToolbarGroup, ScrollToTop } from "~/components/interfaces";
 
 import useStyles from "./styles";
 
-type MinimalPageLayoutProps = PropsWithChildren<{}>;
-
-function MinimalPageLayout(props: MinimalPageLayoutProps) {
+const MinimalPageHeader = memo(() => {
   const { classes: sharedClasses } = useSharedStyles();
   const { classes, cx } = useStyles();
 
   const [scroll] = useWindowScroll();
 
   return (
+    <header className={cx(classes.header, scroll.y > 10 && classes.headerShadow, sharedClasses.blurredBackground)}>
+      <Container size="xl" px="xl" className={sharedClasses.fullHeight}>
+        <Group align="center" spacing="xl" className={sharedClasses.fullHeight}>
+          <Anchor href="/" variant="text" className={sharedClasses.flexCenter}>
+            <Logo className={sharedClasses.logo} />
+          </Anchor>
+
+          <StatusBadge variant="outline" size="lg" />
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <AppToolbarGroup />
+        </Group>
+      </Container>
+    </header>
+  );
+});
+
+const MinimalPageMain = memo((props: PropsWithChildren<{}>) => {
+  const { classes } = useStyles();
+
+  return (
+    <main className={classes.main}>
+      <Container size="xl" px="xl">
+        {props.children}
+      </Container>
+    </main>
+  );
+});
+
+const MinimalPageFooter = memo(() => {
+  const { classes } = useStyles();
+
+  return (
+    <footer className={classes.footer}>
+      <Container size="xl" px="xl" pb="xl">
+        <Center>
+          <Text size="xs" color="dimmed">
+            © 2022 - {APP.name}
+          </Text>
+        </Center>
+      </Container>
+    </footer>
+  );
+});
+
+type MinimalPageLayoutProps = PropsWithChildren<{}>;
+
+function MinimalPageLayout(props: MinimalPageLayoutProps) {
+  return (
     <>
-      <header className={cx(classes.header, scroll.y > 10 && classes.headerShadow, sharedClasses.blurredBackground)}>
-        <Container size="xl" px="xl" className={sharedClasses.fullHeight}>
-          <Group align="center" spacing="xl" className={sharedClasses.fullHeight}>
-            <Anchor href="/" variant="text" className={sharedClasses.flexCenter}>
-              <Logo className={classes.logo} />
-            </Anchor>
+      <MinimalPageHeader />
 
-            <StatusBadge variant="outline" size="lg" />
+      <MinimalPageMain>{props.children}</MinimalPageMain>
 
-            <div style={{ flexGrow: 1 }} />
+      <MinimalPageFooter />
 
-            <ToolbarGroup />
-          </Group>
-        </Container>
-      </header>
-
-      <main className={classes.main} style={{ minHeight: "100vh" }}>
-        <Container size="xl" px="xl">
-          {props.children}
-        </Container>
-      </main>
-
-      <footer className={classes.footer}>
-        <Container size="xl" px="xl" pb="xl">
-          <Center>
-            <Text size="xs" color="dimmed">
-              © 2022 - {APP.name}
-            </Text>
-          </Center>
-        </Container>
-      </footer>
+      <ScrollToTop />
     </>
   );
 }

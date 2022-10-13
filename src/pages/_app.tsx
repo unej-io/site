@@ -74,11 +74,7 @@ function _App({ Component, pageProps, colorScheme, primaryColor, radius }: _AppP
         <NotificationsProvider>
           <ModalsProvider>
             <AuthProvider>
-              <RootProvider>
-                {/*  */}
-                {getLayout(<Component {...pageProps} />)}
-                {/*  */}
-              </RootProvider>
+              <RootProvider>{getLayout(<Component {...pageProps} />)}</RootProvider>
             </AuthProvider>
           </ModalsProvider>
         </NotificationsProvider>

@@ -3,10 +3,12 @@ import type { SVGProps } from "react";
 
 import type { NextPageWithLayout } from "next";
 
-import { Box, Button, Center, createStyles, Grid, Group, List, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { Box, Center, Container, createStyles, Grid, Group, List, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+// import { Carousel } from "@mantine/carousel";
 
-import { APP } from "~/const/app";
-import { ButtonLink, ColorSchemeTogglerSwitch, Head, PrimaryColorSelectGroup, RadiusSelectGroup } from "~/components/core";
+import { IconAffiliate, IconBook2, IconQuestionMark, IconReport } from "@tabler/icons";
+
+import { ButtonLink, ColorSchemeTogglerSwitch, Head, PaperLink, PrimaryColorSelectGroup, RadiusSelectGroup } from "~/components/core";
 import { getPageLayout } from "~/components/layouts";
 
 import useAuthStore from "~/stores/auth";
@@ -885,12 +887,12 @@ const UndrawApps = memo((props: SVGProps<SVGSVGElement>) => {
 
 const useStyles = createStyles((theme) => ({
   section: {
-    marginTop: theme.spacing.xl * 10,
-    marginBottom: theme.spacing.xl * 10,
+    marginTop: theme.spacing.xl * 8,
+    marginBottom: theme.spacing.xl * 8,
 
     [theme.fn.smallerThan("md")]: {
-      marginTop: theme.spacing.xl * 4,
-      marginBottom: theme.spacing.xl * 4,
+      marginTop: theme.spacing.xl * 3,
+      marginBottom: theme.spacing.xl * 3,
     },
   },
 
@@ -906,8 +908,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   section_illustraion_svg: {
-    maxWidth: 460,
-    maxHeight: 460,
+    maxWidth: 540,
+    maxHeight: 540,
   },
 
   order_1_smaller_than_md: {
@@ -928,7 +930,7 @@ const HeroSection = memo(() => {
         <Grid.Col span={12} md={6}>
           <Stack>
             <Title className={classes.section_title}>
-              Community Project <br /> University of Jember
+              Awesome Community Project <br /> University of Jember
             </Title>
 
             <List>
@@ -942,9 +944,6 @@ const HeroSection = memo(() => {
                   Get Started
                 </ButtonLink>
               )}
-              <Button component="a" href={APP.link.github} size="md" radius="xl" variant="default">
-                Source Code
-              </Button>
             </Group>
           </Stack>
         </Grid.Col>
@@ -957,6 +956,55 @@ const HeroSection = memo(() => {
     </section>
   );
 });
+
+// const EventCard = memo((props: { content: string }) => {
+//   return (
+//     <PaperLink href="/events/" withBorder sx={{ height: "100%" }}>
+//       <Center sx={{ height: "100%" }}>
+//         <Text size="xl" weight={700}>
+//           {props.content}
+//         </Text>
+//       </Center>
+//     </PaperLink>
+//   );
+// });
+
+// const EventsSection = memo(() => {
+//   const { classes } = useStyles();
+
+//   return (
+//     <section className={classes.section}>
+//       <Stack>
+//         <Title align="center" className={classes.section_title}>
+//           Events
+//         </Title>
+//         <Text size="xl" color="dimmed" align="center">
+//           Upcoming events
+//         </Text>
+
+//         <Box>
+//           <Carousel slideSize="50%" height={320} mx="auto" align="center" slideGap="md" withIndicators>
+//             <Carousel.Slide>
+//               <EventCard content="1" />
+//             </Carousel.Slide>
+//             <Carousel.Slide>
+//               <EventCard content="2" />
+//             </Carousel.Slide>
+//             <Carousel.Slide>
+//               <EventCard content="3" />
+//             </Carousel.Slide>
+//             <Carousel.Slide>
+//               <EventCard content="4" />
+//             </Carousel.Slide>
+//             <Carousel.Slide>
+//               <EventCard content="5" />
+//             </Carousel.Slide>
+//           </Carousel>
+//         </Box>
+//       </Stack>
+//     </section>
+//   );
+// });
 
 const FormSection = memo(() => {
   const { classes } = useStyles();
@@ -971,7 +1019,7 @@ const FormSection = memo(() => {
         </Grid.Col>
         <Grid.Col span={12} md={6}>
           <Stack>
-            <Title className={classes.section_title}>Form Feature</Title>
+            <Title className={classes.section_title}>Form</Title>
 
             <Text>Build integrated form</Text>
 
@@ -995,7 +1043,7 @@ const LinkSection = memo(() => {
       <Grid gutter="xl">
         <Grid.Col span={12} md={6}>
           <Stack>
-            <Title className={classes.section_title}>Link Feature</Title>
+            <Title className={classes.section_title}>Link</Title>
 
             <Text>One-page link</Text>
 
@@ -1098,12 +1146,118 @@ const ThemeSection = memo(() => {
   );
 });
 
+const LearnSection = memo(() => {
+  const { classes, theme } = useStyles();
+
+  const primary = theme.colorScheme === "light" ? theme.colors[theme.primaryColor][6] : theme.colors[theme.primaryColor][5];
+
+  return (
+    <section className={classes.section}>
+      <Container size="lg">
+        <Stack spacing="xl">
+          <Title align="center" className={classes.section_title}>
+            Learn
+          </Title>
+
+          <Grid gutter="xl">
+            <Grid.Col span={12} md={6}>
+              <PaperLink href="/documentation" p="xl" withBorder sx={{ borderColor: primary }}>
+                <Group position="apart">
+                  <Stack spacing="xs">
+                    <Text size="xl" weight={700}>
+                      Documentation
+                    </Text>
+
+                    <Text color="dimmed">Learn how to use app</Text>
+                  </Stack>
+
+                  <IconBook2 size={32} />
+                </Group>
+              </PaperLink>
+            </Grid.Col>
+
+            <Grid.Col span={12} md={6}>
+              <PaperLink href="/contribute" p="xl" withBorder sx={{ borderColor: primary }}>
+                <Group position="apart">
+                  <Stack spacing="xs">
+                    <Text size="xl" weight={700}>
+                      Contribute
+                    </Text>
+
+                    <Text color="dimmed">Learn how to contribute</Text>
+                  </Stack>
+
+                  <IconAffiliate size={32} />
+                </Group>
+              </PaperLink>
+            </Grid.Col>
+          </Grid>
+        </Stack>
+      </Container>
+    </section>
+  );
+});
+
+const SupportSection = memo(() => {
+  const { classes, theme } = useStyles();
+
+  const primary = theme.colorScheme === "light" ? theme.colors[theme.primaryColor][6] : theme.colors[theme.primaryColor][5];
+
+  return (
+    <section className={classes.section}>
+      <Container size="lg">
+        <Stack spacing="xl">
+          <Title align="center" className={classes.section_title}>
+            Support
+          </Title>
+
+          <Grid gutter="xl">
+            <Grid.Col span={12} md={6}>
+              <PaperLink href="/faq" p="xl" withBorder sx={{ borderColor: primary }}>
+                <Group position="apart">
+                  <Stack spacing="xs">
+                    <Text size="xl" weight={700}>
+                      FAQ
+                    </Text>
+
+                    <Text color="dimmed">Frequently Asked Question</Text>
+                  </Stack>
+
+                  <IconQuestionMark size={32} />
+                </Group>
+              </PaperLink>
+            </Grid.Col>
+
+            <Grid.Col span={12} md={6}>
+              <PaperLink href="/feedback" p="xl" withBorder sx={{ borderColor: primary }}>
+                <Group position="apart">
+                  <Stack spacing="xs">
+                    <Text size="xl" weight={700}>
+                      Feedback
+                    </Text>
+
+                    <Text color="dimmed">Give your feedback</Text>
+                  </Stack>
+
+                  <IconReport size={32} />
+                </Group>
+              </PaperLink>
+            </Grid.Col>
+          </Grid>
+        </Stack>
+      </Container>
+    </section>
+  );
+});
+
 const IndexPage: NextPageWithLayout = () => {
   return (
     <>
       <Head />
 
       <HeroSection />
+
+      {/* <EventsSection /> */}
 
       <FormSection />
 
@@ -1112,6 +1266,10 @@ const IndexPage: NextPageWithLayout = () => {
       <AppsSection />
 
       <ThemeSection />
+
+      <LearnSection />
+
+      <SupportSection />
     </>
   );
 };

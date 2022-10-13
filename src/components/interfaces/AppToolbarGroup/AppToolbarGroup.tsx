@@ -2,16 +2,19 @@ import { memo } from "react";
 
 import { ActionIcon, Group, Popover, useMantineTheme } from "@mantine/core";
 import type { GroupProps } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useViewportSize, useWindowScroll } from "@mantine/hooks";
 
 import { IconPalette } from "@tabler/icons";
 
 import { ColorSchemeTogglerSwitch, PrimaryColorSelectGroup, SpotlightOpenerActionIcon } from "~/components/core";
 
-type ToolbarGroupProps = GroupProps;
+type AppToolbarGroupProps = Omit<GroupProps, "children">;
 
-function ToolbarGroup(props: ToolbarGroupProps) {
+function AppToolbarGroup(props: AppToolbarGroupProps) {
   const theme = useMantineTheme();
+
+  const { width, height } = useViewportSize();
+  const [{ x, y }] = useWindowScroll();
 
   const matchesSmallerThanMedium = useMediaQuery(`(min-width: ${theme.breakpoints.sm}px)`);
 
@@ -20,7 +23,7 @@ function ToolbarGroup(props: ToolbarGroupProps) {
       {matchesSmallerThanMedium && <SpotlightOpenerActionIcon aria-label="app search" />}
 
       {matchesSmallerThanMedium && (
-        <Popover shadow="md" withArrow withinPortal>
+        <Popover shadow="md" trapFocus withArrow withinPortal positionDependencies={[width, height, x, y]}>
           <Popover.Target>
             <ActionIcon aria-label="select primary color">
               <IconPalette />
@@ -37,5 +40,5 @@ function ToolbarGroup(props: ToolbarGroupProps) {
   );
 }
 
-export type { ToolbarGroupProps };
-export default memo(ToolbarGroup);
+export type { AppToolbarGroupProps };
+export default memo(AppToolbarGroup);

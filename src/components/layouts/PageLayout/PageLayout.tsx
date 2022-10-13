@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef } from "react";
-import type { PropsWithChildren, MouseEvent } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import type { PropsWithChildren } from "react";
 
 import type { GetLayout } from "next";
 import { useRouter } from "next/router";
 
-import { ActionIcon, Anchor, Container, Drawer, Group, Navbar, ScrollArea, Stack, Text } from "@mantine/core";
-import { useDisclosure, useMediaQuery, useWindowScroll } from "@mantine/hooks";
+import { ActionIcon, Anchor, Box, Container, Group, Stack, Text, useMantineTheme } from "@mantine/core";
+import { useMediaQuery, useWindowScroll } from "@mantine/hooks";
 
 import { IconMenu2 } from "@tabler/icons";
 
@@ -13,41 +13,105 @@ import { Logo } from "~/libs/unej-io/components/core";
 import { useSharedStyles } from "~/libs/unej-io/hooks/styles";
 
 import { StatusBadge } from "~/components/core";
+import { AppToolbarGroup, PageDrawer, ScrollToTop } from "~/components/interfaces";
 
 import useStyles from "./styles";
 
 import HeaderLinksGroup from "./components/HeaderLinksGroup";
-import ToolbarGroup from "./components/ToolbarGroup";
+
 import AuthLinksGroup from "./components/AuthLinksGroup";
-import DrawerAuthLinks from "./components/DrawerAuthLinks";
-import DrawerNavLinks from "./components/DrawerNavLinks";
 import FooterLinksGroup from "./components/FooterLinksGroup";
+
+const PageHeader = memo((props: { onMenuClick: () => void }) => {
+  const { classes: sharedClasses } = useSharedStyles();
+  const { classes, cx } = useStyles();
+
+  const [scroll] = useWindowScroll();
+
+  return (
+    <header className={cx(classes.header, scroll.y > 10 && classes.headerShadow, sharedClasses.blurredBackground)}>
+      <Container size="xl" px="xl" className={sharedClasses.fullHeight}>
+        <Group align="center" spacing="xl" className={sharedClasses.fullHeight}>
+          <ActionIcon onClick={props.onMenuClick} className={classes.header__menu_action}>
+            <IconMenu2 />
+          </ActionIcon>
+
+          <Anchor href="/" variant="text" className={sharedClasses.flexCenter} aria-label="unej.io logo">
+            <Logo className={sharedClasses.logo} />
+          </Anchor>
+
+          <StatusBadge variant="outline" size="lg" />
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          <HeaderLinksGroup mx="xl" spacing="xl" className={classes.header__links_group} />
+
+          <AppToolbarGroup />
+
+          <AuthLinksGroup className={classes.header__auth_links_group} />
+        </Group>
+      </Container>
+    </header>
+  );
+});
+
+const PageMain = memo((props: PropsWithChildren<{}>) => {
+  const { classes } = useStyles();
+
+  return (
+    <main className={classes.main}>
+      <Container size="xl" px="xl">
+        {props.children}
+      </Container>
+    </main>
+  );
+});
+
+const PageFooter = memo(() => {
+  const { classes: sharedClasses } = useSharedStyles();
+  const { classes } = useStyles();
+
+  return (
+    <footer className={classes.footer}>
+      <Container size="xl" px="xl" pb="xl">
+        <Group position="apart" align="start">
+          <Stack px="xl" mb="xl">
+            <div>
+              <Logo className={sharedClasses.logoSmall} />
+            </div>
+            <Text size="xs" color="dimmed">
+              Build with ❤️ from student to student
+            </Text>
+          </Stack>
+
+          <FooterLinksGroup align="start" px="xl" spacing={48} />
+        </Group>
+      </Container>
+    </footer>
+  );
+});
 
 type PageLayoutProps = PropsWithChildren<{}>;
 
 function PageLayout(props: PageLayoutProps) {
   const router = useRouter();
 
-  const { classes: sharedClasses } = useSharedStyles();
-  const { classes, cx, theme } = useStyles();
+  const theme = useMantineTheme();
 
-  const [scroll] = useWindowScroll();
-  const [drawer, drawerHandle] = useDisclosure(false);
+  const [drawer, setDrawer] = useState(false);
+  const openDrawer = useCallback(() => {
+    setDrawer(true);
+  }, []);
+  const closeDrawer = useCallback(() => {
+    setDrawer(false);
+  }, []);
 
   const matchesLargerThanMedium = useMediaQuery(`(min-width: ${theme.breakpoints.md}px)`);
   const currentMatchesLargerThanMedium = useRef(matchesLargerThanMedium);
 
-  const handleGoToBrandPage = useCallback(
-    (event: MouseEvent) => {
-      event.preventDefault();
-      router.push("/brand");
-    },
-    [router]
-  );
-
   useEffect(() => {
     const handler = () => {
-      setTimeout(drawerHandle.close, 150);
+      setTimeout(closeDrawer, 150);
     };
 
     router.events.on("routeChangeComplete", handler);
@@ -61,89 +125,22 @@ function PageLayout(props: PageLayoutProps) {
 
   useEffect(() => {
     if (matchesLargerThanMedium !== currentMatchesLargerThanMedium.current) {
-      drawerHandle.close();
+      closeDrawer();
       currentMatchesLargerThanMedium.current = matchesLargerThanMedium;
     }
   }, [matchesLargerThanMedium]);
 
   return (
     <>
-      <header className={cx(classes.header, scroll.y > 10 && classes.headerShadow, sharedClasses.blurredBackground)}>
-        <Container size="xl" px="xl" className={sharedClasses.fullHeight}>
-          <Group align="center" spacing="xl" className={sharedClasses.fullHeight}>
-            <ActionIcon onClick={drawerHandle.open} className={classes.header__menu_action}>
-              <IconMenu2 />
-            </ActionIcon>
+      <PageHeader onMenuClick={openDrawer} />
 
-            <Anchor
-              href="/"
-              variant="text"
-              className={sharedClasses.flexCenter}
-              aria-label="unej.io logo"
-              onContextMenu={handleGoToBrandPage}
-            >
-              <Logo className={classes.logo} />
-            </Anchor>
+      <PageDrawer opened={drawer} onClose={closeDrawer} />
 
-            <StatusBadge variant="outline" size="lg" />
+      <PageMain>{props.children}</PageMain>
 
-            <div style={{ flexGrow: 1 }} />
+      <PageFooter />
 
-            <HeaderLinksGroup mx="xl" spacing="xl" className={classes.header__links_group} />
-
-            <ToolbarGroup />
-
-            <AuthLinksGroup className={classes.header__auth_links_group} />
-          </Group>
-        </Container>
-      </header>
-
-      <Drawer
-        opened={drawer}
-        onClose={drawerHandle.close}
-        title={
-          <Anchor component="button" variant="text" className={sharedClasses.flexCenter} onContextMenu={handleGoToBrandPage}>
-            <Logo className={classes.logo} />
-          </Anchor>
-        }
-        padding="xl"
-        size="lg"
-        overlayOpacity={0.3}
-        overlayBlur={3}
-      >
-        <Navbar py="sm" className={classes.drawer__navbar} height="100%">
-          <Navbar.Section>
-            <DrawerAuthLinks />
-          </Navbar.Section>
-
-          <Navbar.Section grow component={ScrollArea} mx="-xs" py="sm" px="xs">
-            <DrawerNavLinks />
-          </Navbar.Section>
-        </Navbar>
-      </Drawer>
-
-      <main className={classes.main}>
-        <Container size="xl" px="xl">
-          {props.children}
-        </Container>
-      </main>
-
-      <footer className={classes.footer}>
-        <Container size="xl" px="xl" pb="xl">
-          <Group position="apart" align="start">
-            <Stack px="xl" mb="xl">
-              <Anchor href="/" variant="text" aria-label="unej.io logo" onContextMenu={handleGoToBrandPage}>
-                <Logo className={classes.logoSmall} />
-              </Anchor>
-              <Text size="xs" color="dimmed">
-                Build with ❤️ from student to student
-              </Text>
-            </Stack>
-
-            <FooterLinksGroup align="start" px="xl" spacing={64} />
-          </Group>
-        </Container>
-      </footer>
+      <ScrollToTop />
     </>
   );
 }
