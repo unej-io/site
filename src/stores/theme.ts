@@ -15,7 +15,7 @@ import { withDevtools } from "./@utilities";
 
 const NAME = "unej-io:theme-store";
 const colorSchemes: ColorScheme[] = ["light", "dark"];
-const primaryColors: MantineColor[] = ["red", "orange", "yellow", "green", "blue", "indigo", "grape"];
+const primaryColors: MantineColor[] = ["red", "orange", "yellow", "green", "blue", "indigo", "grape", "gray"];
 const radii: MantineSize[] = ["sm", "md", "lg"];
 
 function isValidColorScheme(value: unknown): value is ColorScheme {
