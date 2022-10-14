@@ -20,11 +20,11 @@ import {
 } from "@tabler/icons";
 
 import { Logo } from "~/libs/unej-io/components/core";
-import { useSharedStyles } from "~/libs/unej-io/hooks/styles";
 
 import route from "~/const/route";
 
 import { ButtonLink, NavLink } from "~/components/core";
+import { useSharedStyles } from "~/hooks/core";
 
 import useAuthStore from "~/stores/auth";
 

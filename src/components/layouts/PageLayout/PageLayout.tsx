@@ -10,10 +10,10 @@ import { useMediaQuery, useWindowScroll } from "@mantine/hooks";
 import { IconMenu2 } from "@tabler/icons";
 
 import { Logo } from "~/libs/unej-io/components/core";
-import { useSharedStyles } from "~/libs/unej-io/hooks/styles";
 
 import { StatusBadge } from "~/components/core";
 import { AppToolbarGroup, PageDrawer, ScrollToTop } from "~/components/interfaces";
+import { useSharedStyles } from "~/hooks/core";
 
 import useStyles from "./styles";
 
