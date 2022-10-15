@@ -3,9 +3,9 @@ import { memo } from "react";
 import { Anchor, Group, Stack, Text } from "@mantine/core";
 import type { GroupProps } from "@mantine/core";
 
-import { APP } from "~/const/app";
+import { AnchorLink } from "@unej-io/ui/next";
 
-import { AnchorLink } from "~/components/core";
+import { APP } from "~/const/app";
 
 type LinkObject = {
   label: string;

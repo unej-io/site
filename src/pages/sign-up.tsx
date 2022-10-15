@@ -6,10 +6,12 @@ import { useForm } from "@mantine/form";
 import type { FormErrors } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 
+import { AnchorLink } from "@unej-io/ui/next";
+
 import { signUp } from "~/libs/unej-io/firebase/auth";
 import { getFirebaseErrorMessage } from "~/libs/unej-io/firebase/utilities";
 
-import { AnchorLink, Head } from "~/components/core";
+import { Head } from "~/components/core";
 import { getMinimalPageLayout } from "~/components/layouts";
 
 import { useGuestOnly, useSubmitHandler } from "~/hooks/core";

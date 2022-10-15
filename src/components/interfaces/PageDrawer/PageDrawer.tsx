@@ -4,6 +4,9 @@ import type {} from "react";
 import { Avatar, Box, Divider, Drawer, Group, Navbar, NavLink as MantineNavLink, ScrollArea, Text } from "@mantine/core";
 import type { DrawerProps } from "@mantine/core";
 
+import { Logo } from "@unej-io/ui/core";
+import { ButtonLink, NavLink } from "@unej-io/ui/next";
+
 import {
   IconAffiliate,
   IconApps,
@@ -19,11 +22,8 @@ import {
   IconTable,
 } from "@tabler/icons";
 
-import { Logo } from "~/libs/unej-io/components/core";
-
 import route from "~/const/route";
 
-import { ButtonLink, NavLink } from "~/components/core";
 import { useSharedStyles } from "~/hooks/core";
 
 import useAuthStore from "~/stores/auth";

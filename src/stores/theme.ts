@@ -4,31 +4,17 @@ import type { StoreApi } from "zustand";
 
 import type { ColorScheme, MantineColor, MantineSize } from "@mantine/core";
 
+import { defaultThemeSystemValue, isValidColorScheme, isValidPrimaryColor, isValidDefaultRadius } from "@unej-io/ui/system";
+import type { ThemeSystemState } from "@unej-io/ui/system";
+
 import { getCookie, setCookie } from "cookies-next";
 import type { OptionsType } from "cookies-next/lib/types";
 
 import { BroadcastChannel } from "broadcast-channel";
 
-import { isTypeofString } from "javascript-yesterday";
-
 import { withDevtools } from "./@utilities";
 
 const NAME = "unej-io:theme-store";
-const colorSchemes: ColorScheme[] = ["light", "dark"];
-const primaryColors: MantineColor[] = ["red", "orange", "yellow", "green", "blue", "indigo", "grape", "gray"];
-const radii: MantineSize[] = ["sm", "md", "lg"];
-
-function isValidColorScheme(value: unknown): value is ColorScheme {
-  return isTypeofString(value) && colorSchemes.includes(value as any);
-}
-
-function isValidPrimaryColor(value: unknown): value is MantineColor {
-  return isTypeofString(value) && primaryColors.includes(value as any);
-}
-
-function isValidRadius(value: unknown): value is MantineSize {
-  return isTypeofString(value) && radii.includes(value as any);
-}
 
 const expires = () => new Date(new Date().getTime() + 15552000000);
 
@@ -42,22 +28,18 @@ function setPrimaryColorCookie(primaryColor: MantineColor) {
   return primaryColor;
 }
 
-function setRadiusCookie(radius: MantineSize) {
-  setCookie(NAME + ":radius", radius, { expires: expires() });
+function setDefaultRadiusCookie(radius: MantineSize) {
+  setCookie(NAME + ":default-radius", radius, { expires: expires() });
   return radius;
 }
 
-type ThemeStoreState = {
-  colorScheme: ColorScheme;
-  primaryColor: MantineColor;
-  radius: MantineSize;
-};
+type ThemeStoreState = ThemeSystemState;
 
 type ThemeStoreAction = {
   toggleColorScheme: () => void;
   setColorScheme: (colorScheme?: ColorScheme | (string & {})) => void;
   setPrimaryColor: (primaryColor?: MantineColor | (string & {})) => void;
-  setRadius: (radius?: MantineSize | (string & {})) => void;
+  setDefaultRadius: (defaultRadius?: MantineSize | (string & {})) => void;
   setState: (state: Partial<ThemeStoreState>) => void;
 };
 
@@ -77,31 +59,27 @@ type ThemeStoreMessageData =
       payload: MantineColor;
     }
   | {
-      type: "set-radius";
+      type: "set-default-radius";
       payload: MantineSize;
     };
 
 const channel: BroadcastChannel<ThemeStoreMessageData> | null =
   typeof window !== "undefined" ? new BroadcastChannel<ThemeStoreMessageData>(NAME) : null;
 
-type CreateThemeStoreOptions = {
-  colorScheme?: ColorScheme;
-  primaryColor?: MantineColor;
-  radius?: MantineSize;
-};
+type CreateThemeStoreOptions = Partial<ThemeSystemState>;
 
 const createThemeStore =
   (options: CreateThemeStoreOptions = {}) =>
   () => {
-    const { colorScheme, primaryColor, radius } = options;
+    const { colorScheme, primaryColor, defaultRadius } = options;
 
     return create<ThemeStoreType>()(
       withDevtools(
         (set, get) =>
           ({
-            colorScheme: colorScheme || "light",
-            primaryColor: primaryColor || "indigo",
-            radius: radius || "md",
+            colorScheme: colorScheme || defaultThemeSystemValue.colorScheme,
+            primaryColor: primaryColor || defaultThemeSystemValue.primaryColor,
+            defaultRadius: defaultRadius || defaultThemeSystemValue.defaultRadius,
             toggleColorScheme: () => {
               const colorScheme = get().colorScheme === "dark" ? "light" : "dark";
               set({ colorScheme: setColorSchemeCookie(colorScheme) });
@@ -119,18 +97,18 @@ const createThemeStore =
                 channel?.postMessage({ type: "set-primary-color", payload: primaryColor });
               }
             },
-            setRadius: (radius) => {
-              if (isValidRadius(radius)) {
-                set({ radius: setRadiusCookie(radius) });
-                channel?.postMessage({ type: "set-radius", payload: radius });
+            setDefaultRadius: (defaultRadius) => {
+              if (isValidDefaultRadius(defaultRadius)) {
+                set({ defaultRadius: setDefaultRadiusCookie(defaultRadius) });
+                channel?.postMessage({ type: "set-default-radius", payload: defaultRadius });
               }
             },
-            setState: ({ colorScheme, primaryColor, radius }) => {
+            setState: ({ colorScheme, primaryColor, defaultRadius }) => {
               let state: Partial<ThemeStoreState> = {};
 
               if (isValidColorScheme(colorScheme)) state.colorScheme = setColorSchemeCookie(colorScheme);
               if (isValidPrimaryColor(primaryColor)) state.primaryColor = setPrimaryColorCookie(primaryColor);
-              if (isValidRadius(radius)) state.radius = setRadiusCookie(radius);
+              if (isValidDefaultRadius(defaultRadius)) state.defaultRadius = setDefaultRadiusCookie(defaultRadius);
 
               set(state);
             },
@@ -150,17 +128,16 @@ function getPrimaryColorCookie(options: OptionsType) {
   return isValidPrimaryColor(value) ? value : undefined;
 }
 
-function getRadiusCookie(options: OptionsType) {
-  const value = getCookie(NAME + ":radius", options);
-  return isValidRadius(value) ? value : undefined;
+function getDefaultRadiusCookie(options: OptionsType) {
+  const value = getCookie(NAME + ":default-radius", options);
+  return isValidDefaultRadius(value) ? value : undefined;
 }
 
 const { Provider: ThemeStoreProvider, useStore: useThemeStore } = createContext<StoreApi<ThemeStoreType>>();
 
 export type { ThemeStoreState, ThemeStoreAction, ThemeStoreType, ThemeStoreMessageData };
-export { colorSchemes, primaryColors, radii };
 export { channel };
 export { createThemeStore };
 export { ThemeStoreProvider };
-export { getColorSchemeCookie, getPrimaryColorCookie, getRadiusCookie };
+export { getColorSchemeCookie, getPrimaryColorCookie, getDefaultRadiusCookie };
 export default useThemeStore;

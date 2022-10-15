@@ -6,9 +6,9 @@ import type { GetLayout } from "next";
 import { Anchor, Box, Center, Container, Group, Text } from "@mantine/core";
 import { useWindowScroll } from "@mantine/hooks";
 
-import { APP } from "~/const/app";
+import { Logo } from "@unej-io/ui/core";
 
-import { Logo } from "~/libs/unej-io/components/core";
+import { APP } from "~/const/app";
 
 import { StatusBadge } from "~/components/core";
 import { AppToolbarGroup, ScrollToTop } from "~/components/interfaces";

@@ -7,9 +7,9 @@ import { useRouter } from "next/router";
 import { ActionIcon, Anchor, Box, Container, Group, Stack, Text, useMantineTheme } from "@mantine/core";
 import { useMediaQuery, useWindowScroll } from "@mantine/hooks";
 
-import { IconMenu2 } from "@tabler/icons";
+import { Logo } from "@unej-io/ui/core";
 
-import { Logo } from "~/libs/unej-io/components/core";
+import { IconMenu2 } from "@tabler/icons";
 
 import { StatusBadge } from "~/components/core";
 import { AppToolbarGroup, PageDrawer, ScrollToTop } from "~/components/interfaces";

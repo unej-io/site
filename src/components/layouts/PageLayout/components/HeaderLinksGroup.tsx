@@ -4,9 +4,9 @@ import { Anchor, Group, Menu, Text } from "@mantine/core";
 import type { GroupProps } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 
-import { IconAffiliate, IconApps, IconBook2, IconChevronDown, IconLink, IconTable } from "@tabler/icons";
+import { AnchorLink } from "@unej-io/ui/next";
 
-import { AnchorLink } from "~/components/core";
+import { IconAffiliate, IconApps, IconBook2, IconChevronDown, IconLink, IconTable } from "@tabler/icons";
 
 type LinkObject =
   | {

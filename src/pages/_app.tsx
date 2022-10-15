@@ -3,9 +3,11 @@ import { memo } from "react";
 import App from "next/app";
 import type { AppContext, AppInitialProps, AppPropsWithLayout } from "next/app";
 
-import type { ColorScheme, MantineColor, MantineSize } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { ModalsProvider } from "@mantine/modals";
+
+import { FIGLET } from "@unej-io/ui";
+import type { ThemeSystemState } from "@unej-io/ui/system";
 
 import { disableDevtools } from "react-yesterday";
 
@@ -13,7 +15,7 @@ import { APP } from "~/const/app";
 
 import { AuthProvider, Head, RootProvider, ThemeProvider } from "~/components/core";
 
-import { getColorSchemeCookie, getPrimaryColorCookie, getRadiusCookie } from "~/stores/theme";
+import { getColorSchemeCookie, getPrimaryColorCookie, getDefaultRadiusCookie } from "~/stores/theme";
 
 import "~/assets/css/style.css";
 import "~/assets/fonts/index.css";
@@ -21,17 +23,7 @@ import "~/assets/fonts/index.css";
 if (typeof window !== "undefined") {
   if (process.env.NODE_ENV === "production") disableDevtools();
 
-  console.log(
-    `
-     :::    :::       ::::    :::       ::::::::::      :::::::::::                :::::::::::       :::::::: 
-    :+:    :+:       :+:+:   :+:       :+:                 :+:                        :+:          :+:    :+: 
-   +:+    +:+       :+:+:+  +:+       +:+                 +:+                        +:+          +:+    +:+  
-  +#+    +:+       +#+ +:+ +#+       +#++:++#            +#+                        +#+          +#+    +:+   
- +#+    +#+       +#+  +#+#+#       +#+                 +#+                        +#+          +#+    +#+    
-#+#    #+#       #+#   #+#+#       #+#             #+# #+#           #+#          #+#          #+#    #+#     
-########        ###    ####       ##########       #####            ###      ###########       ########       
-`
-  );
+  console.log(FIGLET);
 }
 
 const AppHead = memo(() => {
@@ -55,22 +47,18 @@ const AppHead = memo(() => {
   );
 });
 
-type ExtraAppProps = {
-  colorScheme?: ColorScheme;
-  primaryColor?: MantineColor;
-  radius?: MantineSize;
-};
+type ExtraAppProps = Partial<ThemeSystemState>;
 
 type _AppProps = AppPropsWithLayout & ExtraAppProps;
 
-function _App({ Component, pageProps, colorScheme, primaryColor, radius }: _AppProps) {
+function _App({ Component, pageProps, colorScheme, primaryColor, defaultRadius }: _AppProps) {
   const getLayout = Component.getLayout ?? ((page) => <>{page}</>);
 
   return (
     <>
       <AppHead />
 
-      <ThemeProvider colorScheme={colorScheme} primaryColor={primaryColor} radius={radius}>
+      <ThemeProvider colorScheme={colorScheme} primaryColor={primaryColor} defaultRadius={defaultRadius}>
         <NotificationsProvider>
           <ModalsProvider>
             <AuthProvider>
@@ -89,12 +77,12 @@ _App.getInitialProps = async (appContext: AppContext): Promise<AppInitialProps &
   const { req, res } = appContext.ctx;
   const colorScheme = getColorSchemeCookie({ req, res });
   const primaryColor = getPrimaryColorCookie({ req, res });
-  const radius = getRadiusCookie({ req, res });
+  const defaultRadius = getDefaultRadiusCookie({ req, res });
 
   const extraAppProps: ExtraAppProps = {
     colorScheme,
     primaryColor,
-    radius,
+    defaultRadius,
   };
 
   return {

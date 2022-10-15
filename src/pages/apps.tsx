@@ -4,9 +4,11 @@ import type { NextPageWithLayout } from "next";
 
 import { Anchor, Badge, Box, Center, Container, Grid, Group, Paper, Stack, Text, Title } from "@mantine/core";
 
+import { ActionIconLink } from "@unej-io/ui/next";
+
 import { IconLink, IconPhoto } from "@tabler/icons";
 
-import { ActionIconLink, Head } from "~/components/core";
+import { Head } from "~/components/core";
 import { getPageLayout } from "~/components/layouts";
 
 function AppImagePlaceholder() {

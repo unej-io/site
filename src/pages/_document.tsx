@@ -2,9 +2,9 @@ import Document, { Head, Html, Main, NextScript } from "next/document";
 
 import { createGetInitialProps } from "@mantine/next";
 
-import { cache } from "~/libs/unej-io/theme";
+import { emotionCache } from "@unej-io/ui/core";
 
-const getInitialProps = createGetInitialProps(cache);
+const getInitialProps = createGetInitialProps(emotionCache);
 
 class _Document extends Document {
   static getInitialProps = getInitialProps;

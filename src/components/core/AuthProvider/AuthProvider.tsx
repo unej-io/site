@@ -6,13 +6,13 @@ import { useRouter } from "next/router";
 import { Anchor, Center } from "@mantine/core";
 import { showNotification, hideNotification } from "@mantine/notifications";
 
+import { LogoLoader } from "@unej-io/ui/core";
+
 import auth from "~/libs/unej-io/firebase/auth";
 
 import route from "~/const/route";
 
 import useAuthStore, { createAuthStore, AuthStoreProvider } from "~/stores/auth";
-
-import { LogoLoader } from "~/components/core";
 
 function CenterLogoLoader() {
   return (

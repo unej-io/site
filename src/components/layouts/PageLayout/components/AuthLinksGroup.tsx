@@ -4,14 +4,14 @@ import { ActionIcon, Box, Group, Loader, Menu, ScrollArea, Text } from "@mantine
 import type { GroupProps } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 
+import { ButtonLink } from "@unej-io/ui/next";
+
 import { IconLogout, IconLayoutDashboard, IconUserCircle } from "@tabler/icons";
 
 import { signOut } from "~/libs/unej-io/firebase/auth";
 import { getFirebaseErrorMessage } from "~/libs/unej-io/firebase/utilities";
 
 import route from "~/const/route";
-
-import { ButtonLink } from "~/components/core";
 
 import useAuthStore from "~/stores/auth";
 

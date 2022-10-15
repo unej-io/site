@@ -6,9 +6,11 @@ import type { NextPageWithLayout } from "next";
 import { Box, Center, Container, createStyles, Grid, Group, List, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core";
 // import { Carousel } from "@mantine/carousel";
 
+import { ButtonLink, PaperLink } from "@unej-io/ui/next";
+
 import { IconAffiliate, IconBook2, IconQuestionMark, IconReport } from "@tabler/icons";
 
-import { ButtonLink, ColorSchemeTogglerSwitch, Head, PaperLink, PrimaryColorSelectGroup, RadiusSelectGroup } from "~/components/core";
+import { ColorSchemeTogglerSwitch, DefaultRadiusSelectGroup, Head, PrimaryColorSelectGroup } from "~/components/core";
 import { getPageLayout } from "~/components/layouts";
 
 import useAuthStore from "~/stores/auth";
@@ -1094,7 +1096,7 @@ const AppsSection = memo(() => {
 });
 
 const ThemeSection = memo(() => {
-  const { colorScheme, primaryColor, radius } = useThemeStore();
+  const { colorScheme, primaryColor, defaultRadius } = useThemeStore();
 
   const { classes } = useStyles();
 
@@ -1132,10 +1134,10 @@ const ThemeSection = memo(() => {
               </Stack>
 
               <Stack>
-                <Text size="lg">Radius : {radius}</Text>
+                <Text size="lg">Radius : {defaultRadius}</Text>
 
                 <Box px="xs">
-                  <RadiusSelectGroup />
+                  <DefaultRadiusSelectGroup />
                 </Box>
               </Stack>
             </Stack>
