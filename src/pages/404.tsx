@@ -5,7 +5,6 @@ import type { NextPageWithLayout } from "next";
 import { Button, Container, createStyles, Group, Text, Title } from "@mantine/core";
 
 import { Head } from "~/components/core";
-import { getMinimalPageLayout } from "~/components/layouts";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -93,7 +92,5 @@ const NotFoundPage: NextPageWithLayout = () => {
     </>
   );
 };
-
-NotFoundPage.getLayout = getMinimalPageLayout;
 
 export default NotFoundPage;
