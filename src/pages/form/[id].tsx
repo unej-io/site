@@ -4,6 +4,7 @@ import type { GetServerSideProps, NextPageWithLayout } from "next";
 
 import { Head } from "~/components/core";
 import {} from "~/components/layouts";
+import { FormRenderer } from "~/components/features/form";
 
 type Props = {
   form: {
@@ -29,6 +30,8 @@ const FormByIdPage: NextPageWithLayout<Props> = (props) => {
       <Head title={{ prefix: `Form ${form.title}` }} />
 
       <div>FormByIdPage</div>
+
+      <FormRenderer />
     </>
   );
 };

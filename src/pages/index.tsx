@@ -890,12 +890,22 @@ const UndrawApps = memo((props: SVGProps<SVGSVGElement>) => {
 
 const useStyles = createStyles((theme) => ({
   section: {
-    marginTop: theme.spacing.xl * 8,
-    marginBottom: theme.spacing.xl * 8,
+    marginTop: theme.spacing.xl * 9,
+    marginBottom: theme.spacing.xl * 9,
 
     [theme.fn.smallerThan("md")]: {
       marginTop: theme.spacing.xl * 3,
       marginBottom: theme.spacing.xl * 3,
+    },
+  },
+
+  sectionSmall: {
+    marginTop: theme.spacing.xl * 5,
+    marginBottom: theme.spacing.xl * 5,
+
+    [theme.fn.smallerThan("md")]: {
+      marginTop: theme.spacing.xl * 2,
+      marginBottom: theme.spacing.xl * 2,
     },
   },
 
@@ -910,12 +920,12 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
-  section_illustraion_svg: {
+  section_illustraionSvg: {
     maxWidth: 540,
     maxHeight: 540,
   },
 
-  order_1_smaller_than_md: {
+  orderOneSmallerThanMd: {
     [theme.fn.smallerThan("md")]: {
       order: 1,
     },
@@ -937,8 +947,11 @@ const HeroSection = memo(() => {
             </Title>
 
             <List>
-              <List.Item>Easy - use and integration.</List.Item>
-              <List.Item>Open source - all packages have GPL-3.0 license.</List.Item>
+              <List.Item>Easy to use and full integration</List.Item>
+              <List.Item>Built with modern tech stack</List.Item>
+              <List.Item>Theme customization</List.Item>
+              <List.Item>Accessibility support</List.Item>
+              <List.Item>Open Source</List.Item>
             </List>
 
             <Group mt="xl">
@@ -952,7 +965,7 @@ const HeroSection = memo(() => {
         </Grid.Col>
         <Grid.Col span={12} md={6}>
           <Center>
-            <UndrawVisionaryTechnology className={classes.section_illustraion_svg} />
+            <UndrawVisionaryTechnology className={classes.section_illustraionSvg} />
           </Center>
         </Grid.Col>
       </Grid>
@@ -1015,16 +1028,21 @@ const FormSection = memo(() => {
   return (
     <section className={classes.section}>
       <Grid gutter="xl">
-        <Grid.Col span={12} md={6} className={classes.order_1_smaller_than_md}>
+        <Grid.Col span={12} md={6} className={classes.orderOneSmallerThanMd}>
           <Center>
-            <UndrawForms className={classes.section_illustraion_svg} />
+            <UndrawForms className={classes.section_illustraionSvg} />
           </Center>
         </Grid.Col>
         <Grid.Col span={12} md={6}>
           <Stack>
             <Title className={classes.section_title}>Form</Title>
 
-            <Text>Build integrated form</Text>
+            <Text>Form builder</Text>
+
+            <List>
+              <List.Item>Fully integrated form</List.Item>
+              <List.Item>Custom theme</List.Item>
+            </List>
 
             <Group mt="xl">
               <ButtonLink href="/form" size="md" radius="xl">
@@ -1050,6 +1068,11 @@ const LinkSection = memo(() => {
 
             <Text>One-page link</Text>
 
+            <List>
+              <List.Item>Build easy</List.Item>
+              <List.Item>Custom theme</List.Item>
+            </List>
+
             <Group mt="xl">
               <ButtonLink href="/link" size="md" radius="xl">
                 Get Started
@@ -1059,7 +1082,7 @@ const LinkSection = memo(() => {
         </Grid.Col>
         <Grid.Col span={12} md={6}>
           <Center>
-            <UndrawPersonalInfo className={classes.section_illustraion_svg} />
+            <UndrawPersonalInfo className={classes.section_illustraionSvg} />
           </Center>
         </Grid.Col>
       </Grid>
@@ -1073,9 +1096,9 @@ const AppsSection = memo(() => {
   return (
     <section className={classes.section}>
       <Grid gutter="xl">
-        <Grid.Col span={12} md={6} className={classes.order_1_smaller_than_md}>
+        <Grid.Col span={12} md={6} className={classes.orderOneSmallerThanMd}>
           <Center>
-            <UndrawApps className={classes.section_illustraion_svg} />
+            <UndrawApps className={classes.section_illustraionSvg} />
           </Center>
         </Grid.Col>
         <Grid.Col span={12} md={6}>
@@ -1109,9 +1132,9 @@ const ThemeSection = memo(() => {
             <Title className={classes.section_title}>Fully Customized Theme</Title>
 
             <List>
-              <List.Item>Customized Color Scheme</List.Item>
-              <List.Item>Customized Primary Color</List.Item>
-              <List.Item>Customized Radius</List.Item>
+              <List.Item>Color Scheme</List.Item>
+              <List.Item>Primary Color</List.Item>
+              <List.Item>Radius</List.Item>
             </List>
           </Stack>
         </Grid.Col>
@@ -1166,7 +1189,7 @@ const LearnSection = memo(() => {
   const { classes: paperClasses } = usePaperStyles();
 
   return (
-    <section className={classes.section}>
+    <section className={classes.sectionSmall}>
       <Container size="lg">
         <Stack spacing="xl">
           <Title align="center" className={classes.section_title}>
@@ -1218,7 +1241,7 @@ const SupportSection = memo(() => {
   const { classes: paperClasses } = usePaperStyles();
 
   return (
-    <section className={classes.section}>
+    <section className={classes.sectionSmall}>
       <Container size="lg">
         <Stack spacing="xl">
           <Title align="center" className={classes.section_title}>

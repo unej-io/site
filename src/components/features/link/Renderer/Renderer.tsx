@@ -1,13 +1,13 @@
 import {} from "react";
-import type { PropsWithChildren } from "react";
 
-type LinkRendererProps = PropsWithChildren<{}>;
+type LinkRendererProps = {};
 
 function LinkRenderer(props: LinkRendererProps) {
+  const {} = props;
+
   return (
     <>
       <div>LinkRenderer</div>
-      {props.children}
     </>
   );
 }
