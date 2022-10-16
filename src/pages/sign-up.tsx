@@ -65,15 +65,16 @@ const SignUpPage: NextPageWithLayout = () => {
 
         <form onSubmit={handleSubmit}>
           <Paper withBorder shadow="md" p={30} mt={30}>
-            <TextInput type="email" label="Email" placeholder="Your email" required {...form.getInputProps("email")} />
+            <TextInput type="email" label="Email" placeholder="Your email" required withAsterisk {...form.getInputProps("email")} />
 
-            <PasswordInput mt="md" label="Password" placeholder="Your password" required {...form.getInputProps("password")} />
+            <PasswordInput mt="md" label="Password" placeholder="Your password" required withAsterisk {...form.getInputProps("password")} />
 
             <PasswordInput
               mt="md"
               label="Confirm Password"
               placeholder="Confirmation password"
               required
+              withAsterisk
               {...form.getInputProps("confirmPassword")}
             />
 
