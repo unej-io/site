@@ -4,6 +4,7 @@ import type { SVGProps } from "react";
 import type { NextPageWithLayout } from "next";
 
 import { Box, Center, Container, createStyles, Grid, Group, List, Paper, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import type { MantineTheme } from "@mantine/core";
 // import { Carousel } from "@mantine/carousel";
 
 import { ButtonLink, PaperLink } from "@unej-io/ui/next";
@@ -1148,10 +1149,21 @@ const ThemeSection = memo(() => {
   );
 });
 
-const LearnSection = memo(() => {
-  const { classes, theme } = useStyles();
+const getPrimary = (theme: MantineTheme) => {
+  const { colorScheme, primaryColor, primaryShade } = theme;
+  return theme.colors[primaryColor][typeof primaryShade === "object" ? primaryShade[colorScheme] : primaryShade];
+};
 
-  const primary = theme.colorScheme === "light" ? theme.colors[theme.primaryColor][6] : theme.colors[theme.primaryColor][5];
+const usePaperStyles = createStyles((theme) => {
+  const primary = getPrimary(theme);
+
+  return { link: { "&:active": { borderColor: primary }, "&:focus": { borderColor: primary } } };
+});
+
+const LearnSection = memo(() => {
+  const { classes } = useStyles();
+
+  const { classes: paperClasses } = usePaperStyles();
 
   return (
     <section className={classes.section}>
@@ -1163,7 +1175,7 @@ const LearnSection = memo(() => {
 
           <Grid gutter="xl">
             <Grid.Col span={12} md={6}>
-              <PaperLink href="/documentation" p="xl" withBorder sx={{ borderColor: primary }}>
+              <PaperLink href="/docs" p="xl" className={paperClasses.link} withBorder>
                 <Group position="apart">
                   <Stack spacing="xs">
                     <Text size="xl" weight={700}>
@@ -1179,7 +1191,7 @@ const LearnSection = memo(() => {
             </Grid.Col>
 
             <Grid.Col span={12} md={6}>
-              <PaperLink href="/contribute" p="xl" withBorder sx={{ borderColor: primary }}>
+              <PaperLink href="/contribute" p="xl" className={paperClasses.link} withBorder>
                 <Group position="apart">
                   <Stack spacing="xs">
                     <Text size="xl" weight={700}>
@@ -1201,9 +1213,9 @@ const LearnSection = memo(() => {
 });
 
 const SupportSection = memo(() => {
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
 
-  const primary = theme.colorScheme === "light" ? theme.colors[theme.primaryColor][6] : theme.colors[theme.primaryColor][5];
+  const { classes: paperClasses } = usePaperStyles();
 
   return (
     <section className={classes.section}>
@@ -1215,7 +1227,7 @@ const SupportSection = memo(() => {
 
           <Grid gutter="xl">
             <Grid.Col span={12} md={6}>
-              <PaperLink href="/faq" p="xl" withBorder sx={{ borderColor: primary }}>
+              <PaperLink href="/faq" p="xl" className={paperClasses.link} withBorder>
                 <Group position="apart">
                   <Stack spacing="xs">
                     <Text size="xl" weight={700}>
@@ -1231,7 +1243,7 @@ const SupportSection = memo(() => {
             </Grid.Col>
 
             <Grid.Col span={12} md={6}>
-              <PaperLink href="/feedback" p="xl" withBorder sx={{ borderColor: primary }}>
+              <PaperLink href="/feedback" p="xl" className={paperClasses.link} withBorder>
                 <Group position="apart">
                   <Stack spacing="xs">
                     <Text size="xl" weight={700}>
